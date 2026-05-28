@@ -7,35 +7,27 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
   <style>
     :root {
+      --background: #fffbf9;
       --surface: #fff8f4;
       --surface-low: #fff1e5;
       --surface-container: #faebde;
-      --surface-high: #f4e6d8;
-      --surface-highest: #efe0d3;
       --text: #211a12;
       --muted: #524435;
-      --outline: #857462;
-      --outline-soft: #d8c3ae;
-      --primary: #855300;
-      --primary-hot: #d48806;
-      --primary-soft: #ffddb8;
-      --primary-soft-2: #ffb95f;
+      --outline: #e2d1c3;
+      --outline-strong: #857462;
+      --primary: #d48806;
+      --primary-soft: rgba(212, 136, 6, .1);
       --danger: #ba1a1a;
       --danger-soft: #ffdad6;
-      --wood: #372f26;
-      --slate: #595f66;
-      --disabled: #9a9995;
-
-      --radius-sm: 6px;
-      --radius-md: 10px;
+      --sidebar-w: 288px;
+      --mobile-header-h: 64px;
+      --radius: 12px;
       --radius-lg: 16px;
-      --header-h: 76px;
-      --sidebar-w: 270px;
-      --ledge: 4px;
     }
 
     * {
@@ -50,10 +42,7 @@
       margin: 0;
       min-height: 100vh;
       color: var(--text);
-      background:
-        radial-gradient(circle at 25% 20%, rgba(255, 185, 95, .62), transparent 34%),
-        radial-gradient(circle at 78% 58%, rgba(255, 185, 95, .54), transparent 31%),
-        linear-gradient(90deg, rgba(55, 47, 38, .92) 0 21%, rgba(133, 83, 0, .45) 21% 42%, rgba(255, 185, 95, .7) 42% 69%, rgba(55, 47, 38, .9) 69% 100%);
+      background: var(--background);
       font-family: "Literata", Georgia, serif;
     }
 
@@ -67,289 +56,332 @@
       cursor: pointer;
     }
 
-    .app-header {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      height: var(--header-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px clamp(16px, 3vw, 30px);
-      background: rgba(255, 248, 244, .96);
-      border-bottom: 2px solid var(--outline);
-      backdrop-filter: blur(10px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-icon,
-    .item-icon {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      color: var(--primary);
-      flex: 0 0 auto;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: clamp(21px, 2.3vw, 30px);
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
       line-height: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .top-total {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--primary);
+    .font-action {
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-weight: 700;
-      font-size: clamp(28px, 5vw, 56px);
-      line-height: .95;
-      white-space: nowrap;
-    }
-
-    .icon-button {
-      display: grid;
-      place-items: center;
-      min-width: 42px;
-      height: 42px;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      border-radius: 999px;
-      transition: transform .15s ease, background .15s ease;
-    }
-
-    .icon-button:hover {
-      background: var(--surface-high);
-    }
-
-    .icon-button:active {
-      transform: translateY(2px);
-    }
-
-    .shell {
-      display: grid;
-      grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
-      min-height: calc(100vh - var(--header-h));
-    }
-
-    .sidebar {
-      position: sticky;
-      top: var(--header-h);
-      align-self: start;
-      height: calc(100vh - var(--header-h));
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      padding: 22px 18px;
-      background: rgba(255, 241, 229, .96);
-      border-right: 2px solid var(--outline);
-    }
-
-    .sidebar-title {
-      margin: 0 0 6px;
-      color: var(--primary);
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 28px;
-      line-height: 1.05;
-    }
-
-    .sidebar p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .nav {
-      display: grid;
-      gap: 9px;
-      margin-top: 18px;
-    }
-
-    .nav a {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      color: var(--muted);
-      text-decoration: none;
-      border-radius: var(--radius-sm);
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      transition: background .15s ease, transform .15s ease;
-    }
-
-    .nav a.active {
-      color: #472a00;
-      background: var(--primary-hot);
-    }
-
-    .nav a:hover {
-      background: var(--surface-highest);
-    }
-
-    .sidebar-actions {
-      margin-top: auto;
-      display: grid;
-      gap: 12px;
-    }
-
-    main {
-      width: min(1120px, 100%);
-      margin-inline: auto;
-      padding: clamp(16px, 3vw, 32px);
-      padding-bottom: 120px;
-    }
-
-    .receipt {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(22px, 3vw, 32px);
-      background: var(--surface-highest);
-      border: 2px solid var(--outline);
-      border-radius: var(--radius-md) var(--radius-md) 0 0;
-      clip-path: polygon(
-        0 0, 100% 0, 100% 92%,
-        98% 100%, 96% 92%, 94% 100%, 92% 92%, 90% 100%,
-        88% 92%, 86% 100%, 84% 92%, 82% 100%, 80% 92%,
-        78% 100%, 76% 92%, 74% 100%, 72% 92%, 70% 100%,
-        68% 92%, 66% 100%, 64% 92%, 62% 100%, 60% 92%,
-        58% 100%, 56% 92%, 54% 100%, 52% 92%, 50% 100%,
-        48% 92%, 46% 100%, 44% 92%, 42% 100%, 40% 92%,
-        38% 100%, 36% 92%, 34% 100%, 32% 92%, 30% 100%,
-        28% 92%, 26% 100%, 24% 92%, 22% 100%, 20% 92%,
-        18% 100%, 16% 92%, 14% 100%, 12% 92%, 10% 100%,
-        8% 92%, 6% 100%, 4% 92%, 2% 100%, 0 92%
-      );
-    }
-
-    .receipt-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
     }
 
     .label {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin: 0 0 14px;
+      margin: 0 0 24px;
       color: var(--muted);
       font-family: "Space Grotesk", system-ui, sans-serif;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: .08em;
+      letter-spacing: .05em;
       line-height: 1;
       text-transform: uppercase;
     }
 
-    .receipt-total {
+    .mobile-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      display: none;
+      width: 100%;
+      height: var(--mobile-header-h);
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      background: #fff;
+      border-bottom: 1px solid var(--outline);
+    }
+
+    .mobile-brand,
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .mobile-brand h1,
+    .brand h2 {
+      margin: 0;
+      overflow: hidden;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 700;
+      line-height: 1.1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .mobile-brand h1 {
+      font-size: 18px;
+    }
+
+    .mobile-total {
+      color: var(--primary);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      width: var(--sidebar-w);
+      height: 100vh;
+      flex-direction: column;
+      padding: 32px;
+      background: #fff;
+      border-right: 1px solid var(--outline);
+    }
+
+    .brand {
+      margin-bottom: 10px;
+    }
+
+    .brand h2 {
+      font-size: 20px;
+      letter-spacing: -.01em;
+    }
+
+    .brand-icon,
+    .nav-icon,
+    .action-icon {
+      color: var(--primary);
+    }
+
+    .sidebar-copy {
+      margin: 0 0 46px;
+      color: var(--muted);
+      font-size: 14px;
+      opacity: .72;
+    }
+
+    .nav {
+      display: grid;
+      gap: 12px;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 20px;
+      color: var(--muted);
+      border-radius: var(--radius);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background .16s ease, color .16s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      background: var(--surface-low);
+    }
+
+    .nav a.active {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .new-bill {
+      width: 100%;
+      min-height: 54px;
+      margin-top: auto;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: var(--radius);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 700;
+      transition: filter .16s ease, transform .16s ease;
+    }
+
+    .new-bill:hover {
+      filter: brightness(1.05);
+    }
+
+    .new-bill:active,
+    .quick-btn:active,
+    .action-btn:active {
+      transform: scale(.98);
+    }
+
+    main {
+      width: min(1152px, calc(100% - var(--sidebar-w)));
+      margin: 0;
+      margin-left: max(var(--sidebar-w), calc(var(--sidebar-w) + (100vw - var(--sidebar-w) - 1152px) / 2));
+      padding: 48px 48px 112px;
+    }
+
+    .summary {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--outline);
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .summary .label {
+      margin-bottom: 14px;
+      color: var(--primary);
+      letter-spacing: .12em;
+    }
+
+    .total {
       display: flex;
       align-items: baseline;
-      gap: 8px;
-      margin: 0;
+      gap: 12px;
+    }
+
+    .total strong {
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: clamp(44px, 8vw, 70px);
+      font-size: clamp(56px, 8vw, 76px);
       font-weight: 700;
-      letter-spacing: -.04em;
+      letter-spacing: -.02em;
+      line-height: .95;
+    }
+
+    .total span {
+      color: var(--muted);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .summary-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-align: right;
+    }
+
+    .summary-meta > div {
+      min-width: 70px;
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+    }
+
+    .meta-value {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 30px;
+      font-weight: 700;
       line-height: 1;
     }
 
-    .receipt-total small {
-      color: var(--muted);
-      font-size: .42em;
-      letter-spacing: 0;
-    }
-
-    .table-no {
-      text-align: right;
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: clamp(24px, 4vw, 32px);
-      font-weight: 700;
-    }
-
-    .section {
-      margin-top: clamp(24px, 4vw, 42px);
+    .quick-section {
+      margin-bottom: 64px;
     }
 
     .grid-actions {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .quick-btn,
-    .raised-btn {
-      border: 2px solid var(--outline);
-      border-radius: var(--radius-md);
-      box-shadow: 0 var(--ledge) 0 0 var(--outline);
-      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-    }
-
-    .quick-btn:active,
-    .raised-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 0 var(--outline);
+      gap: 24px;
     }
 
     .quick-btn {
-      min-height: 145px;
-      display: grid;
-      place-items: center;
-      gap: 8px;
-      padding: 22px 16px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      padding: 0;
       color: var(--text);
-      background: rgba(255, 248, 244, .94);
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 1px 2px rgba(33, 26, 18, .04);
       text-align: center;
+      transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
     }
 
     .quick-btn:hover {
+      border-color: rgba(212, 136, 6, .35);
+      box-shadow: 0 16px 32px rgba(33, 26, 18, .1);
+    }
+
+    .quick-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
       background: var(--surface-low);
     }
 
+    .quick-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+
+    .quick-btn:hover img {
+      transform: scale(1.08);
+    }
+
+    .quick-body {
+      width: 100%;
+      padding: 16px;
+    }
+
     .quick-name {
+      display: block;
+      overflow: hidden;
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: clamp(18px, 2vw, 22px);
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .quick-price {
+      display: block;
+      margin-top: 5px;
       color: var(--primary);
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: .04em;
+      letter-spacing: .05em;
+      text-transform: uppercase;
     }
 
     .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 330px;
-      gap: 28px;
+      grid-template-columns: minmax(0, 8fr) minmax(260px, 4fr);
+      gap: 48px;
       align-items: start;
     }
 
     .card {
-      background: rgba(255, 248, 244, .96);
-      border: 2px solid var(--outline);
-      border-radius: var(--radius-md);
       overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 1px 2px rgba(33, 26, 18, .04);
     }
 
     .history-list {
@@ -357,28 +389,34 @@
     }
 
     .history-empty {
-      padding: 26px;
+      padding: 28px;
       color: var(--muted);
+      font-size: 15px;
       text-align: center;
     }
 
     .history-item {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 16px;
+      display: flex;
       align-items: center;
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--outline-soft);
-      animation: itemIn .22s ease both;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px;
+      border-bottom: 1px solid var(--outline);
+      transition: background .16s ease;
+      animation: itemIn .2s ease both;
     }
 
     .history-item:last-child {
       border-bottom: 0;
     }
 
+    .history-item:hover {
+      background: var(--surface-low);
+    }
+
     @keyframes itemIn {
       from {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
         opacity: 0;
       }
       to {
@@ -390,110 +428,125 @@
     .history-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       min-width: 0;
     }
 
     .history-icon {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       display: grid;
       place-items: center;
       flex: 0 0 auto;
       color: var(--primary);
-      background: var(--surface-high);
-      border-radius: 999px;
+      background: var(--primary-soft);
+      border-radius: var(--radius);
     }
 
     .history-title {
       margin: 0;
       overflow: hidden;
-      color: var(--text);
-      font-size: 19px;
+      font-size: 16px;
       font-weight: 700;
+      line-height: 1.25;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
     .history-time {
-      margin: 2px 0 0;
+      margin: 4px 0 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 12px;
+      opacity: .66;
     }
 
     .history-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 28px;
+      flex: 0 0 auto;
+    }
+
+    .history-price {
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 22px;
-      font-weight: 500;
+      font-size: 20px;
+      font-weight: 700;
       white-space: nowrap;
     }
 
-    .delete-btn {
+    .delete-btn,
+    .icon-button {
       display: grid;
       place-items: center;
-      width: 38px;
-      height: 38px;
-      border: 0;
-      color: var(--danger);
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      color: var(--muted);
       background: transparent;
+      border: 0;
       border-radius: 999px;
+      transition: background .16s ease, color .16s ease;
     }
 
     .delete-btn:hover {
+      color: var(--danger);
       background: var(--danger-soft);
     }
 
     .panel {
       display: grid;
-      gap: 14px;
+      gap: 32px;
     }
 
-    .raised-btn {
+    .actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .action-btn {
       width: 100%;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 58px;
-      padding: 14px 18px;
+      gap: 12px;
+      min-height: 54px;
+      padding: 14px 16px;
       color: var(--text);
-      background: var(--surface-high);
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius);
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 17px;
+      font-size: 14px;
       font-weight: 700;
+      text-align: left;
+      transition: background .16s ease, color .16s ease, border-color .16s ease, transform .16s ease;
     }
 
-    .raised-btn.primary {
-      color: #472a00;
-      background: var(--primary-hot);
+    .action-btn:hover {
+      background: var(--surface-low);
     }
 
-    .raised-btn.danger {
+    .action-btn.danger {
+      color: var(--muted);
+    }
+
+    .action-btn.danger:hover {
       color: var(--danger);
-      background: var(--danger-soft);
-    }
-
-    .raised-btn.muted {
-      color: #31312e;
-      background: var(--disabled);
+      background: rgba(255, 218, 214, .38);
+      border-color: rgba(186, 26, 26, .25);
     }
 
     .quote {
-      margin-top: 14px;
-      padding: 22px;
-      background: rgba(255, 241, 229, .96);
-      border: 2px dashed var(--outline);
-      border-radius: var(--radius-md);
+      padding: 24px;
+      background: var(--surface-low);
+      border: 1px solid rgba(226, 209, 195, .5);
+      border-radius: var(--radius-lg);
     }
 
     .quote-head {
       display: flex;
       align-items: center;
-      gap: 13px;
-      margin-bottom: 12px;
+      gap: 16px;
+      margin-bottom: 16px;
     }
 
     .avatar {
@@ -501,68 +554,172 @@
       height: 48px;
       display: grid;
       place-items: center;
+      flex: 0 0 auto;
       color: var(--primary);
-      background: var(--surface-highest);
-      border: 2px solid var(--outline);
-      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: 999px;
+    }
+
+    .quote small {
+      display: block;
+      color: var(--primary);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
     }
 
     .quote p {
       margin: 0;
     }
 
-    .quote small {
-      color: var(--muted);
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 12px;
+    .quote-name {
+      margin-top: 2px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: .06em;
     }
 
     .quote-text {
       color: var(--muted);
+      font-size: 13px;
       font-style: italic;
+      line-height: 1.6;
+      opacity: .75;
     }
 
     .mobile-nav {
       position: fixed;
       bottom: 0;
       left: 0;
-      z-index: 35;
+      z-index: 50;
       display: none;
       width: 100%;
-      grid-template-columns: repeat(3, 1fr);
+      justify-content: space-around;
+      align-items: center;
       gap: 8px;
-      padding: 10px 12px 14px;
-      background: rgba(255, 248, 244, .97);
-      border-top: 2px solid var(--outline);
-      backdrop-filter: blur(10px);
+      padding: 10px 16px 12px;
+      background: #fff;
+      border-top: 1px solid var(--outline);
     }
 
     .mobile-nav a {
       display: grid;
       place-items: center;
-      gap: 2px;
-      padding: 9px;
-      color: var(--muted);
-      text-decoration: none;
-      border-radius: 999px;
+      gap: 4px;
+      min-width: 74px;
+      color: rgba(82, 68, 53, .66);
       font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: .05em;
+      letter-spacing: .02em;
+      text-decoration: none;
       text-transform: uppercase;
     }
 
     .mobile-nav a.active {
-      color: #472a00;
+      color: var(--primary);
+    }
+
+    .cookie-bar {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      left: calc(var(--sidebar-w) + 24px);
+      z-index: 55;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 20px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 18px 44px rgba(33, 26, 18, .14);
+    }
+
+    .cookie-bar.show {
+      display: flex;
+    }
+
+    .cookie-copy {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .cookie-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      color: var(--primary);
       background: var(--primary-soft);
+      border-radius: var(--radius);
+    }
+
+    .cookie-copy strong {
+      display: block;
+      margin-bottom: 4px;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 15px;
+    }
+
+    .cookie-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .cookie-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 10px;
+    }
+
+    .cookie-btn {
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid var(--outline);
+      border-radius: 10px;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background .16s ease, color .16s ease, transform .16s ease;
+    }
+
+    .cookie-btn:active {
+      transform: scale(.98);
+    }
+
+    .cookie-btn.secondary {
+      color: var(--muted);
+      background: #fff;
+    }
+
+    .cookie-btn.secondary:hover {
+      background: var(--surface-low);
+    }
+
+    .cookie-btn.primary {
+      color: #fff;
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .cookie-btn.primary:hover {
+      filter: brightness(1.05);
     }
 
     .modal {
       position: fixed;
       inset: 0;
-      z-index: 60;
+      z-index: 80;
       display: none;
       place-items: center;
       padding: 18px;
@@ -578,8 +735,9 @@
       max-height: min(760px, 92vh);
       overflow: auto;
       background: var(--surface);
-      border: 2px solid var(--outline);
+      border: 1px solid var(--outline);
       border-radius: var(--radius-lg);
+      box-shadow: 0 24px 70px rgba(33, 26, 18, .2);
     }
 
     .modal-head,
@@ -589,21 +747,22 @@
       justify-content: space-between;
       gap: 14px;
       padding: 18px 20px;
-      background: var(--surface-low);
+      background: #fff;
     }
 
     .modal-head {
-      border-bottom: 1px solid var(--outline-soft);
+      border-bottom: 1px solid var(--outline);
     }
 
     .modal-foot {
-      border-top: 1px solid var(--outline-soft);
+      border-top: 1px solid var(--outline);
     }
 
     .modal-title {
       margin: 0;
       font-family: "Space Grotesk", system-ui, sans-serif;
       font-size: 24px;
+      line-height: 1.1;
     }
 
     .settings-list {
@@ -618,14 +777,14 @@
       gap: 10px;
       align-items: end;
       padding: 14px;
-      background: var(--surface-container);
-      border: 1px solid var(--outline-soft);
-      border-radius: var(--radius-md);
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius);
     }
 
     .field {
       display: grid;
-      gap: 5px;
+      gap: 6px;
     }
 
     .field label {
@@ -633,7 +792,7 @@
       font-family: "Space Grotesk", system-ui, sans-serif;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: .06em;
+      letter-spacing: .05em;
       text-transform: uppercase;
     }
 
@@ -644,24 +803,31 @@
       padding: 8px 10px;
       color: var(--text);
       background: var(--surface);
-      border: 2px solid var(--outline);
-      border-radius: var(--radius-sm);
+      border: 1px solid var(--outline-strong);
+      border-radius: 8px;
     }
 
     .tiny-btn {
       min-height: 42px;
-      padding: 8px 12px;
-      border: 2px solid var(--outline);
-      border-radius: var(--radius-sm);
+      padding: 8px 14px;
       color: var(--text);
-      background: var(--surface-high);
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: 8px;
       font-family: "Space Grotesk", system-ui, sans-serif;
       font-weight: 700;
+    }
+
+    .tiny-btn.primary {
+      color: #fff;
+      background: var(--primary);
+      border-color: var(--primary);
     }
 
     .tiny-btn.danger {
       color: var(--danger);
       background: var(--danger-soft);
+      border-color: rgba(186, 26, 26, .18);
     }
 
     .sr-only {
@@ -676,26 +842,19 @@
       clip: rect(0, 0, 0, 0);
     }
 
-    svg {
-      width: 1em;
-      height: 1em;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    @media (max-width: 1020px) {
+      .mobile-header,
+      .mobile-nav {
+        display: flex;
+      }
 
-    .svg-lg {
-      font-size: 40px;
-    }
+      .cookie-bar {
+        right: 16px;
+        bottom: 82px;
+        left: 16px;
+      }
 
-    .svg-md {
-      font-size: 24px;
-    }
-
-    @media (max-width: 980px) {
-      .shell {
+      .layout {
         display: block;
       }
 
@@ -703,68 +862,74 @@
         display: none;
       }
 
+      main {
+        margin: 0 auto;
+        padding: calc(var(--mobile-header-h) + 32px) 24px 104px;
+      }
+
       .content-grid {
         grid-template-columns: 1fr;
+        gap: 40px;
       }
 
       .panel {
         grid-template-columns: 1fr 1fr;
       }
 
+      .panel > .label,
       .quote {
         grid-column: 1 / -1;
       }
+    }
 
+    @media (max-width: 760px) {
       main {
         padding-inline: 16px;
       }
-    }
 
-    @media (max-width: 700px) {
-      :root {
-        --header-h: 66px;
-      }
-
-      .app-header {
-        padding: 10px 14px;
-      }
-
-      .brand h1 {
-        max-width: 48vw;
-      }
-
-      .top-total {
-        font-size: 29px;
-      }
-
-      .receipt-row {
+      .summary-row {
         align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .summary-meta {
+        width: 100%;
+        justify-content: flex-start;
+        text-align: left;
       }
 
       .grid-actions {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
       }
 
-      .quick-btn {
-        min-height: 124px;
-        padding: 18px 10px;
+      .history-item {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .history-right {
+        width: 100%;
+        justify-content: space-between;
       }
 
       .panel {
         grid-template-columns: 1fr;
       }
 
-      .history-item {
-        grid-template-columns: 1fr;
-        gap: 10px;
+      .cookie-bar,
+      .cookie-copy,
+      .cookie-actions {
+        align-items: stretch;
+        flex-direction: column;
       }
 
-      .history-right {
-        justify-content: space-between;
+      .cookie-actions {
+        width: 100%;
       }
 
-      .mobile-nav {
-        display: grid;
+      .cookie-btn {
+        width: 100%;
       }
 
       .setting-row {
@@ -772,113 +937,110 @@
       }
 
       .modal-foot {
+        align-items: stretch;
         flex-direction: column;
-      }
-
-      .modal-foot .raised-btn,
-      .modal-foot .tiny-btn {
-        width: 100%;
       }
     }
 
     @media (max-width: 420px) {
-      .brand-icon {
-        display: none;
+      .mobile-brand h1 {
+        max-width: 42vw;
       }
 
-      .receipt {
-        padding: 20px 16px 28px;
+      .mobile-total {
+        font-size: 20px;
       }
 
-      .receipt-total {
-        font-size: 42px;
+      .total strong {
+        font-size: 48px;
       }
 
-      .table-no {
-        font-size: 22px;
+      .total span {
+        font-size: 24px;
+      }
+
+      .quick-body {
+        padding: 14px 10px;
       }
     }
   </style>
 </head>
 
 <body>
-  <header class="app-header">
-    <div class="brand" aria-label="Hospodská kalkulačka">
-      <span class="brand-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><path d="M8 8h7v12H8z"/><path d="M15 10h2a3 3 0 0 1 0 6h-2"/><path d="M8 8a4 4 0 0 1 8 0"/><path d="M7 20h10"/></svg>
-      </span>
-      <h1>Hospodská kalkulačka</h1>
+  <header class="mobile-header">
+    <div class="mobile-brand" aria-label="Hospodská kalkulačka">
+      <span class="material-symbols-outlined brand-icon" aria-hidden="true">sports_bar</span>
+      <h1>Kalkulačka</h1>
     </div>
-
-    <div class="top-total">
-      <span id="topTotal">0 Kč</span>
-      <button class="icon-button" id="scrollHistoryBtn" title="Historie" aria-label="Přejít na historii">
-        <svg class="svg-md" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/><path d="M12 7v5l3 2"/></svg>
-      </button>
-    </div>
+    <div class="mobile-total" id="topTotal">0 Kč</div>
   </header>
 
-  <div class="shell">
+  <div class="layout">
     <aside class="sidebar" aria-label="Postranní navigace">
-      <div>
-        <h2 class="sidebar-title">Hospodská<br>kalkulačka</h2>
-        <p>Vítejte u stolu</p>
+      <div class="brand">
+        <span class="material-symbols-outlined brand-icon" aria-hidden="true">sports_bar</span>
+        <h2>Hospodská kalkulačka</h2>
       </div>
+      <p class="sidebar-copy">Správa vaší útraty v reálném čase</p>
 
       <nav class="nav">
         <a class="active" href="#kalkulacka">
-          <svg class="svg-md" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 11h2M14 11h2M8 15h2M14 15h2"/></svg>
+          <span class="material-symbols-outlined nav-icon">calculate</span>
           Kalkulačka
         </a>
         <a href="#historie">
-          <svg class="svg-md" viewBox="0 0 24 24"><path d="M7 3h10v18H7z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+          <span class="material-symbols-outlined">receipt_long</span>
           Historie
         </a>
         <a href="#nastaveni">
-          <svg class="svg-md" viewBox="0 0 24 24"><path d="M4 8h16v8H4z"/><path d="M7 12h2M15 12h2"/></svg>
+          <span class="material-symbols-outlined">payments</span>
           Ceník
         </a>
         <a href="#nastaveni">
-          <svg class="svg-md" viewBox="0 0 24 24"><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
+          <span class="material-symbols-outlined">settings</span>
           Nastavení
         </a>
       </nav>
 
-      <div class="sidebar-actions">
-        <button class="raised-btn primary" id="newBillBtn">
-          <svg class="svg-md" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
-          Nový účet
-        </button>
-      </div>
+      <button class="new-bill" id="newBillBtn">Nový účet</button>
     </aside>
 
     <main id="kalkulacka">
-      <section class="receipt" aria-label="Souhrn účtu">
-        <div class="receipt-row">
+      <section class="summary" aria-label="Souhrn účtu">
+        <div class="summary-row">
           <div>
-            <p class="label">Celková útrata</p>
-            <h2 class="receipt-total"><span id="receiptTotal">0</span><small>Kč</small></h2>
+            <p class="label">Aktuální útrata</p>
+            <div class="total">
+              <strong id="receiptTotal">0</strong>
+              <span>Kč</span>
+            </div>
           </div>
-          <div>
-            <p class="label">Stůl č.</p>
-            <div class="table-no" id="tableNumber">12</div>
+
+          <div class="summary-meta">
+            <div>
+              <span class="meta-label">STŮL</span>
+              <span class="meta-value" id="tableNumber">12</span>
+            </div>
+            <div>
+              <span class="meta-label">POLOŽEK</span>
+              <span class="meta-value" id="itemCount">0</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="quickAddTitle">
+      <section class="quick-section" aria-labelledby="quickAddTitle">
         <h3 class="label" id="quickAddTitle">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-          Přidat položku
+          <span class="material-symbols-outlined" aria-hidden="true">add_circle</span>
+          Rychlá volba
         </h3>
-
         <div class="grid-actions" id="quickButtons"></div>
       </section>
 
-      <section class="section content-grid">
+      <section class="content-grid">
         <div id="historie">
           <h3 class="label">
-            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>
+            <span class="material-symbols-outlined" aria-hidden="true">history</span>
             Poslední položky
           </h3>
 
@@ -888,32 +1050,34 @@
         </div>
 
         <aside id="nastaveni" class="panel" aria-label="Nastavení kalkulačky">
-          <h3 class="label" style="grid-column: 1 / -1;">
-            <svg viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M2 14h4M10 8h4M18 16h4"/></svg>
-            Nastavení
+          <h3 class="label">
+            <span class="material-symbols-outlined" aria-hidden="true">bolt</span>
+            Akce
           </h3>
 
-          <button class="raised-btn muted" id="openSettingsBtn">
-            <svg class="svg-md" viewBox="0 0 24 24"><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
-            Nastavení cen
-          </button>
+          <div class="actions">
+            <button class="action-btn" id="openSettingsBtn">
+              <span class="material-symbols-outlined action-icon" aria-hidden="true">tune</span>
+              <span>Nastavení cen</span>
+            </button>
 
-          <button class="raised-btn danger" id="clearBtn">
-            <svg class="svg-md" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 15h10l1-15"/><path d="M10 11v6M14 11v6"/></svg>
-            Smazat vše
-          </button>
+            <button class="action-btn danger" id="clearBtn">
+              <span class="material-symbols-outlined" aria-hidden="true">delete_sweep</span>
+              <span>Smazat vše</span>
+            </button>
+          </div>
 
           <div class="quote">
             <div class="quote-head">
               <div class="avatar" aria-hidden="true">
-                <svg class="svg-md" viewBox="0 0 24 24"><path d="M8 8h7v12H8z"/><path d="M15 10h2a3 3 0 0 1 0 6h-2"/><path d="M8 8a4 4 0 0 1 8 0"/></svg>
+                <span class="material-symbols-outlined">person</span>
               </div>
               <div>
                 <small>Stamgast</small>
-                <p>Host č. <span id="quoteTable">12</span></p>
+                <p class="quote-name">Host č. <span id="quoteTable">12</span></p>
               </div>
             </div>
-            <p class="quote-text">„Pivo dělá hezká těla.“</p>
+            <p class="quote-text">"Pivo dělá hezká těla."</p>
           </div>
         </aside>
       </section>
@@ -922,25 +1086,39 @@
 
   <nav class="mobile-nav" aria-label="Mobilní navigace">
     <a class="active" href="#kalkulacka">
-      <svg class="svg-md" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-      Přidat
+      <span class="material-symbols-outlined">calculate</span>
+      Kalkulačka
     </a>
     <a href="#historie">
-      <svg class="svg-md" viewBox="0 0 24 24"><path d="M7 3h10v18H7z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+      <span class="material-symbols-outlined">list_alt</span>
       Historie
     </a>
     <a href="#nastaveni">
-      <svg class="svg-md" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M2 14h4M10 8h4M18 16h4"/></svg>
+      <span class="material-symbols-outlined">tune</span>
       Nastavení
     </a>
   </nav>
+
+  <div class="cookie-bar" id="cookieBar" role="region" aria-label="Informace o cookies">
+    <div class="cookie-copy">
+      <span class="material-symbols-outlined cookie-icon" aria-hidden="true">cookie</span>
+      <div>
+        <strong>Používáme cookies</strong>
+        <p>Ukládáme jen nezbytná data v prohlížeči, aby kalkulačka držela aktuální účet a nastavení cen.</p>
+      </div>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn secondary" id="cookieDismissBtn" type="button">Zavřít</button>
+      <button class="cookie-btn primary" id="cookieAcceptBtn" type="button">Rozumím</button>
+    </div>
+  </div>
 
   <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
     <div class="modal-box">
       <div class="modal-head">
         <h2 class="modal-title" id="settingsTitle">Nastavení tlačítek</h2>
         <button class="icon-button" id="closeSettingsBtn" aria-label="Zavřít nastavení">
-          <svg class="svg-md" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          <span class="material-symbols-outlined">close</span>
         </button>
       </div>
 
@@ -948,13 +1126,14 @@
 
       <div class="modal-foot">
         <button class="tiny-btn" id="addButtonBtn">+ Přidat tlačítko</button>
-        <button class="raised-btn primary" id="saveSettingsBtn" style="max-width: 240px;">Uložit nastavení</button>
+        <button class="tiny-btn primary" id="saveSettingsBtn">Uložit nastavení</button>
       </div>
     </div>
   </div>
 
   <script>
     const STORAGE_KEY = "hospodska-kalkulacka-v1";
+    const COOKIE_KEY = "hospodska-kalkulacka-cookies-ok";
 
     function createId() {
       if (window.crypto && typeof window.crypto.randomUUID === "function") {
@@ -972,13 +1151,31 @@
       return JSON.parse(JSON.stringify(data));
     }
 
-    const icons = {
-      beer: '<svg class="svg-lg" viewBox="0 0 24 24"><path d="M8 8h7v12H8z"/><path d="M15 10h2a3 3 0 0 1 0 6h-2"/><path d="M8 8a4 4 0 0 1 8 0"/><path d="M7 20h10"/></svg>',
-      drink: '<svg class="svg-lg" viewBox="0 0 24 24"><path d="M7 3h10l-1 18H8z"/><path d="M8 8h8"/><path d="M10 13h4"/></svg>',
-      shot: '<svg class="svg-lg" viewBox="0 0 24 24"><path d="M6 4h5l-.8 14H6.8z"/><path d="M14 8h4v12h-4z"/><path d="M13 8h6l-1-4h-4z"/></svg>',
-      food: '<svg class="svg-lg" viewBox="0 0 24 24"><path d="M7 3v18"/><path d="M4 3v5a3 3 0 0 0 6 0V3"/><path d="M17 3v18"/><path d="M17 3c2 2 3 4 3 7h-3"/></svg>',
-      coffee: '<svg class="svg-lg" viewBox="0 0 24 24"><path d="M5 8h11v6a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M6 3v2M10 3v2M14 3v2"/></svg>',
-      custom: '<svg class="svg-lg" viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg>'
+    const iconSymbols = {
+      beer: "sports_bar",
+      drink: "local_drink",
+      shot: "liquor",
+      food: "restaurant",
+      coffee: "coffee",
+      custom: "payments"
+    };
+
+    const iconImages = {
+      beer: "pivo.png",
+      drink: "kofola.png",
+      shot: "panak.png",
+      food: "jidlo.png",
+      coffee: "kofola.png",
+      custom: "page.png"
+    };
+
+    const textRepairs = {
+      "PanĂˇk": "Panák",
+      "JĂ­dlo": "Jídlo",
+      "KĂˇva": "Káva",
+      "NĂˇpoj": "Nápoj",
+      "NovĂˇ poloĹľka": "Nová položka",
+      "PoloĹľka": "Položka"
     };
 
     const defaultState = {
@@ -999,9 +1196,32 @@
     const topTotal = document.getElementById("topTotal");
     const receiptTotal = document.getElementById("receiptTotal");
     const tableNumber = document.getElementById("tableNumber");
+    const itemCount = document.getElementById("itemCount");
     const quoteTable = document.getElementById("quoteTable");
     const settingsModal = document.getElementById("settingsModal");
     const settingsList = document.getElementById("settingsList");
+    const cookieBar = document.getElementById("cookieBar");
+
+    function repairText(text) {
+      return textRepairs[text] || text;
+    }
+
+    function normalizeState(nextState) {
+      nextState.table = Number(nextState.table || defaultState.table);
+      nextState.items = nextState.items.map(item => ({
+        ...item,
+        name: repairText(item.name),
+        price: Number(item.price || 0),
+        icon: item.icon || "custom"
+      }));
+      nextState.history = nextState.history.map(item => ({
+        ...item,
+        name: repairText(item.name),
+        price: Number(item.price || 0),
+        icon: item.icon || "custom"
+      }));
+      return nextState;
+    }
 
     function loadState() {
       try {
@@ -1009,7 +1229,7 @@
         if (!saved || !Array.isArray(saved.items) || !Array.isArray(saved.history)) {
           return cloneData(defaultState);
         }
-        return saved;
+        return normalizeState(saved);
       } catch {
         return cloneData(defaultState);
       }
@@ -1038,13 +1258,18 @@
       topTotal.textContent = formatPrice(total);
       receiptTotal.textContent = Number(total).toLocaleString("cs-CZ");
       tableNumber.textContent = state.table;
+      itemCount.textContent = state.history.length;
       quoteTable.textContent = state.table;
 
       quickButtons.innerHTML = state.items.map(item => `
         <button class="quick-btn" data-add-id="${item.id}" title="Přidat ${escapeHtml(item.name)}">
-          <span class="item-icon">${icons[item.icon] || icons.custom}</span>
-          <span class="quick-name">${escapeHtml(item.name)}</span>
-          <span class="quick-price">${formatPrice(item.price)}</span>
+          <span class="quick-image">
+            <img src="${iconImages[item.icon] || iconImages.custom}" alt="${escapeAttribute(item.name)}">
+          </span>
+          <span class="quick-body">
+            <span class="quick-name">${escapeHtml(item.name)}</span>
+            <span class="quick-price">${formatPrice(item.price)}</span>
+          </span>
         </button>
       `).join("");
 
@@ -1054,16 +1279,18 @@
         historyList.innerHTML = state.history.map(entry => `
           <article class="history-item">
             <div class="history-left">
-              <div class="history-icon">${icons[entry.icon] || icons.custom}</div>
+              <div class="history-icon">
+                <span class="material-symbols-outlined">${iconSymbols[entry.icon] || iconSymbols.custom}</span>
+              </div>
               <div style="min-width:0;">
                 <h4 class="history-title">${escapeHtml(entry.name)}</h4>
                 <p class="history-time">${formatTime(entry.createdAt)}</p>
               </div>
             </div>
             <div class="history-right">
-              <span>${formatPrice(entry.price)}</span>
+              <span class="history-price">${formatPrice(entry.price)}</span>
               <button class="delete-btn" data-delete-id="${entry.id}" aria-label="Smazat položku ${escapeHtml(entry.name)}">
-                <svg class="svg-md" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 15h10l1-15"/><path d="M10 11v6M14 11v6"/></svg>
+                <span class="material-symbols-outlined">delete</span>
               </button>
             </div>
           </article>
@@ -1133,7 +1360,7 @@
     function saveSettingsFromModal() {
       const rows = [...settingsList.querySelectorAll(".setting-row")];
 
-      const nextItems = rows.map(row => {
+      state.items = rows.map(row => {
         const id = row.dataset.settingId;
         const name = row.querySelector('[data-field="name"]').value.trim() || "Položka";
         const price = Math.max(0, Number(row.querySelector('[data-field="price"]').value || 0));
@@ -1142,7 +1369,6 @@
         return { id, name, price, icon };
       });
 
-      state.items = nextItems;
       render();
       closeSettings();
     }
@@ -1170,6 +1396,11 @@
       return escapeHtml(text);
     }
 
+    function hideCookieBar() {
+      localStorage.setItem(COOKIE_KEY, "1");
+      cookieBar.classList.remove("show");
+    }
+
     document.addEventListener("click", event => {
       const addBtn = event.target.closest("[data-add-id]");
       if (addBtn) {
@@ -1193,6 +1424,8 @@
     document.getElementById("closeSettingsBtn").addEventListener("click", closeSettings);
     document.getElementById("saveSettingsBtn").addEventListener("click", saveSettingsFromModal);
     document.getElementById("addButtonBtn").addEventListener("click", addSettingsRow);
+    document.getElementById("cookieAcceptBtn").addEventListener("click", hideCookieBar);
+    document.getElementById("cookieDismissBtn").addEventListener("click", hideCookieBar);
 
     document.getElementById("clearBtn").addEventListener("click", () => {
       if (state.history.length && confirm("Opravdu smazat všechny položky z aktuálního účtu?")) {
@@ -1209,10 +1442,6 @@
       }
     });
 
-    document.getElementById("scrollHistoryBtn").addEventListener("click", () => {
-      document.getElementById("historie").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
     settingsModal.addEventListener("click", event => {
       if (event.target === settingsModal) closeSettings();
     });
@@ -1220,6 +1449,10 @@
     document.addEventListener("keydown", event => {
       if (event.key === "Escape") closeSettings();
     });
+
+    if (localStorage.getItem(COOKIE_KEY) !== "1") {
+      cookieBar.classList.add("show");
+    }
 
     render();
   </script>
