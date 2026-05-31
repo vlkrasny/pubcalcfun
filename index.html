@@ -942,6 +942,37 @@
       }
     }
 
+    @media (max-width: 560px) {
+      .grid-actions {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .quick-btn {
+        min-height: 112px;
+        flex-direction: row;
+        align-items: stretch;
+        text-align: left;
+      }
+
+      .quick-image {
+        width: min(42%, 150px);
+        min-width: 118px;
+        aspect-ratio: auto;
+        flex: 0 0 auto;
+      }
+
+      .quick-body {
+        display: grid;
+        align-content: center;
+        padding: 18px;
+      }
+
+      .quick-name {
+        white-space: normal;
+      }
+    }
+
     @media (max-width: 420px) {
       .mobile-brand h1 {
         max-width: 42vw;
@@ -960,7 +991,7 @@
       }
 
       .quick-body {
-        padding: 14px 10px;
+        padding: 16px;
       }
     }
   </style>
