@@ -599,7 +599,8 @@
       justify-content: space-around;
       align-items: center;
       gap: 8px;
-      padding: 10px 16px 12px;
+      min-height: calc(72px + env(safe-area-inset-bottom, 0px));
+      padding: 10px 16px calc(12px + env(safe-area-inset-bottom, 0px));
       background: #fff;
       border-top: 1px solid var(--outline);
     }
@@ -609,11 +610,13 @@
       place-items: center;
       gap: 4px;
       min-width: 74px;
+      min-height: 48px;
       color: rgba(82, 68, 53, .66);
       font-family: "Space Grotesk", system-ui, sans-serif;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: .02em;
+      line-height: 1.15;
       text-decoration: none;
       text-transform: uppercase;
     }
@@ -864,7 +867,7 @@
 
       main {
         margin: 0 auto;
-        padding: calc(var(--mobile-header-h) + 32px) 24px 104px;
+        padding: calc(var(--mobile-header-h) + 32px) 24px calc(112px + env(safe-area-inset-bottom, 0px));
       }
 
       .content-grid {
@@ -949,17 +952,17 @@
       }
 
       .quick-btn {
+        display: grid;
+        grid-template-columns: minmax(112px, 38%) minmax(0, 1fr);
         min-height: 112px;
-        flex-direction: row;
         align-items: stretch;
         text-align: left;
       }
 
       .quick-image {
-        width: min(42%, 150px);
-        min-width: 118px;
+        width: 100%;
+        min-width: 0;
         aspect-ratio: auto;
-        flex: 0 0 auto;
       }
 
       .quick-body {
@@ -969,7 +972,13 @@
       }
 
       .quick-name {
+        overflow: visible;
+        text-overflow: clip;
         white-space: normal;
+      }
+
+      .quick-price {
+        line-height: 1.2;
       }
     }
 
