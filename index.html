@@ -982,17 +982,35 @@
     @media (max-width: 560px) {
       .grid-actions {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 10px;
       }
 
       .quick-btn {
-        min-height: 190px;
+        display: grid;
+        grid-template-columns: 108px minmax(0, 1fr);
+        min-height: 108px;
+        align-items: stretch;
+        text-align: left;
       }
 
       .quick-image {
         width: 100%;
         min-width: 0;
-        aspect-ratio: 16 / 10;
+        height: 100%;
+        aspect-ratio: auto;
+      }
+
+      .quick-body {
+        position: static;
+        display: grid;
+        align-content: center;
+        padding: 16px 18px;
+        background: #fff;
+        border-top: 0;
+      }
+
+      .quick-name {
+        font-size: 17px;
       }
     }
 
