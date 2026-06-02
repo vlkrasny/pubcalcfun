@@ -325,6 +325,7 @@
     }
 
     .quick-image {
+      position: relative;
       width: 100%;
       aspect-ratio: 4 / 3;
       overflow: hidden;
@@ -341,6 +342,10 @@
 
     .quick-btn:hover img {
       transform: scale(1.08);
+    }
+
+    .quick-label {
+      display: none;
     }
 
     .quick-body {
@@ -914,16 +919,42 @@
         aspect-ratio: 1 / 1;
       }
 
-      .quick-body {
+      .quick-label {
         position: absolute;
         right: 0;
         bottom: 0;
         left: 0;
-        z-index: 1;
-        padding: 14px;
+        z-index: 2;
+        display: grid;
+        gap: 2px;
+        padding: 10px 12px 11px;
         color: var(--text);
-        background: linear-gradient(180deg, rgba(255, 255, 255, .86), #fff 72%);
-        border-top: 1px solid rgba(226, 209, 195, .78);
+        background: rgba(255, 255, 255, .94);
+        border-top: 1px solid rgba(226, 209, 195, .84);
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        text-align: center;
+      }
+
+      .quick-label-name {
+        overflow: hidden;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.15;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .quick-label-price {
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+      }
+
+      .quick-body {
+        display: none;
       }
 
       .quick-name {
@@ -986,31 +1017,20 @@
       }
 
       .quick-btn {
-        display: grid;
-        grid-template-columns: 108px minmax(0, 1fr);
-        min-height: 108px;
-        align-items: stretch;
-        text-align: left;
+        width: min(100%, 220px);
+        min-height: 0;
+        margin-inline: auto;
+        text-align: center;
       }
 
       .quick-image {
         width: 100%;
         min-width: 0;
-        height: 100%;
-        aspect-ratio: auto;
+        aspect-ratio: 1 / 1;
       }
 
-      .quick-body {
-        position: static;
-        display: grid;
-        align-content: center;
-        padding: 16px 18px;
-        background: #fff;
-        border-top: 0;
-      }
-
-      .quick-name {
-        font-size: 17px;
+      .quick-label {
+        padding: 11px 12px 12px;
       }
     }
 
@@ -1337,6 +1357,10 @@
         <button class="quick-btn" data-add-id="${item.id}" title="Přidat ${escapeHtml(item.name)}">
           <span class="quick-image">
             <img src="${iconImages[item.icon] || iconImages.custom}" alt="${escapeAttribute(item.name)}">
+            <span class="quick-label" aria-hidden="true">
+              <span class="quick-label-name">${escapeHtml(item.name)}</span>
+              <span class="quick-label-price">${formatPrice(item.price)}</span>
+            </span>
           </span>
           <span class="quick-body">
             <span class="quick-name">${escapeHtml(item.name)}</span>
