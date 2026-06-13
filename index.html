@@ -508,6 +508,58 @@
       gap: 12px;
     }
 
+    .card-payment {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius);
+    }
+
+    .card-payment-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .card-payment-toggle input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    .card-payment-rate {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .card-payment-rate label {
+      color: var(--muted);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .card-payment-rate input {
+      width: 86px;
+      min-height: 42px;
+      padding: 8px 10px;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--outline-strong);
+      border-radius: 8px;
+      text-align: right;
+    }
+
     .action-btn {
       width: 100%;
       display: flex;
@@ -1148,6 +1200,18 @@
           </h3>
 
           <div class="actions">
+            <div class="card-payment">
+              <label class="card-payment-toggle">
+                <input id="cardPaymentEnabled" type="checkbox">
+                <span>Platba kartou</span>
+              </label>
+              <div class="card-payment-rate">
+                <label for="cardPaymentRate">Poplatek</label>
+                <input id="cardPaymentRate" type="number" min="0" step="0.01" inputmode="decimal" value="1.95" aria-label="Poplatek za platbu kartou v procentech">
+                <span aria-hidden="true">%</span>
+              </div>
+            </div>
+
             <button class="action-btn" id="openSettingsBtn">
               <span class="material-symbols-outlined action-icon" aria-hidden="true">tune</span>
               <span>Nastavení cen</span>
@@ -1278,7 +1342,11 @@
         { id: createId(), name: "Panák", price: 60, icon: "shot" },
         { id: createId(), name: "Jídlo", price: 150, icon: "food" }
       ],
-      history: []
+      history: [],
+      cardPayment: {
+        enabled: false,
+        rate: 1.95
+      }
     };
 
     let state = loadState();
@@ -1293,6 +1361,8 @@
     const settingsModal = document.getElementById("settingsModal");
     const settingsList = document.getElementById("settingsList");
     const cookieBar = document.getElementById("cookieBar");
+    const cardPaymentEnabled = document.getElementById("cardPaymentEnabled");
+    const cardPaymentRate = document.getElementById("cardPaymentRate");
 
     function repairText(text) {
       return textRepairs[text] || text;
@@ -1312,6 +1382,10 @@
         price: Number(item.price || 0),
         icon: item.icon || "custom"
       }));
+      nextState.cardPayment = {
+        enabled: Boolean(nextState.cardPayment && nextState.cardPayment.enabled),
+        rate: Math.max(0, Number(nextState.cardPayment && nextState.cardPayment.rate || defaultState.cardPayment.rate))
+      };
       return nextState;
     }
 
@@ -1332,7 +1406,7 @@
     }
 
     function formatPrice(value) {
-      return `${Number(value || 0).toLocaleString("cs-CZ")} Kč`;
+      return `${Math.round(Number(value || 0)).toLocaleString("cs-CZ")} Kč`;
     }
 
     function formatTime(iso) {
@@ -1341,17 +1415,24 @@
     }
 
     function getTotal() {
-      return state.history.reduce((sum, item) => sum + Number(item.price || 0), 0);
+      const subtotal = state.history.reduce((sum, item) => sum + Number(item.price || 0), 0);
+      if (!state.cardPayment.enabled) {
+        return subtotal;
+      }
+
+      return subtotal * (1 + Number(state.cardPayment.rate || 0) / 100);
     }
 
     function render() {
       const total = getTotal();
 
       topTotal.textContent = formatPrice(total);
-      receiptTotal.textContent = Number(total).toLocaleString("cs-CZ");
+      receiptTotal.textContent = Math.round(Number(total)).toLocaleString("cs-CZ");
       tableNumber.textContent = state.table;
       itemCount.textContent = state.history.length;
       quoteTable.textContent = state.table;
+      cardPaymentEnabled.checked = state.cardPayment.enabled;
+      cardPaymentRate.value = Number(state.cardPayment.rate || 0);
 
       quickButtons.innerHTML = state.items.map(item => `
         <button class="quick-btn" data-add-id="${item.id}" title="Přidat ${escapeHtml(item.name)}">
@@ -1522,6 +1603,16 @@
     document.getElementById("addButtonBtn").addEventListener("click", addSettingsRow);
     document.getElementById("cookieAcceptBtn").addEventListener("click", hideCookieBar);
     document.getElementById("cookieDismissBtn").addEventListener("click", hideCookieBar);
+
+    cardPaymentEnabled.addEventListener("change", () => {
+      state.cardPayment.enabled = cardPaymentEnabled.checked;
+      render();
+    });
+
+    cardPaymentRate.addEventListener("change", () => {
+      state.cardPayment.rate = Math.max(0, Number(cardPaymentRate.value || 0));
+      render();
+    });
 
     document.getElementById("clearBtn").addEventListener("click", () => {
       if (state.history.length && confirm("Opravdu smazat všechny položky z aktuálního účtu?")) {
